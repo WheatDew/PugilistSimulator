@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class AnimatorManagement : MonoBehaviour
 {
-    public Animator ani;
+    public Animator ani,ani2;
     public Text self, opponent;
     private float timer,targetTime;
     
@@ -19,11 +19,23 @@ public class AnimatorManagement : MonoBehaviour
 
     private void Update()
     {
+        //读秒判定
         timer+=Time.deltaTime;
         if(timer>targetTime)
         {
             self.text = "";
             timer = 0;
+        }
+        //对手被击判定
+        if ((self.text == "L1" || self.text == "R1")&&opponent.text=="")
+        {
+            ani2.SetTrigger("B1");
+            opponent.text = "B1";
+        }
+        //重置状态
+        if(ani2.GetCurrentAnimatorStateInfo(0).IsName("A0"))
+        {
+            opponent.text = "";
         }
     }
 }
